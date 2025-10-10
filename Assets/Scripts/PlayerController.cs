@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -6,8 +7,10 @@ public class PlayerController: MonoBehaviour {
 
   private const float MoveSpeed = 5f;
   private const float LookSpeed = 0.1f;
-  private const float JumpSpeed = 5f;
+  //private const float JumpSpeed = 5f;
   private const float VLookLimit = 60f;
+  private const float DashDuration = 0.1f;
+  private const float DashDistance = 4f;
 
   [SerializeField]
   private Transform _pitchTransform;
@@ -17,7 +20,8 @@ public class PlayerController: MonoBehaviour {
   private Quaternion _currYawRot;
   private Vector3 _currPitchEulerAngles;
   private Vector3 _currYawEulerAngles;
-  private bool _grounded;
+  private Coroutine _dashCoroutine;
+  //private bool _grounded;
 
   public void Move(Vector3 dir, float dT) {
     Matrix4x4 localToWorldDir = new(transform.right, Vector4.zero, transform.forward, Vector4.zero);
@@ -37,12 +41,28 @@ public class PlayerController: MonoBehaviour {
     transform.localRotation = _currYawRot;
   }
 
-  public void Jump() {
-    if (_grounded) {
-      _rb.AddForce(JumpSpeed * transform.up, ForceMode.VelocityChange);
-      _grounded = false;
+  // TODO: add cooldown or ammunition replenished by platforms?
+  public void Dash() {
+    if (_dashCoroutine != null) {
+      return;
     }
+
+    _dashCoroutine = StartCoroutine(DashCoroutine());
   }
+
+  private IEnumerator DashCoroutine() {
+    _rb.linearVelocity = DashDistance / DashDuration * transform.forward;
+    yield return new WaitForSeconds(DashDuration);
+    _rb.linearVelocity = Vector3.zero;
+    _dashCoroutine = null;
+  }
+
+  //public void Jump() {
+  //  if (_grounded) {
+  //    _rb.AddForce(JumpSpeed * transform.up, ForceMode.VelocityChange);
+  //    _grounded = false;
+  //  }
+  //}
 
   private void Awake() {
     Instance = this;
@@ -54,10 +74,10 @@ public class PlayerController: MonoBehaviour {
     _currYawEulerAngles = _currYawRot.eulerAngles;
   }
 
-  // TODO: fix falling off without jumping case 
-  private void OnCollisionEnter(Collision collision) {
-    if (!_grounded) {
-      _grounded = Vector3.Dot(collision.GetContact(0).normal, transform.up) > 0;
-    }
-  }
+  //// TODO: fix falling off without jumping case 
+  //private void OnCollisionEnter(Collision collision) {
+  //  if (!_grounded) {
+  //    _grounded = Vector3.Dot(collision.GetContact(0).normal, transform.up) > 0;
+  //  }
+  //}
 }

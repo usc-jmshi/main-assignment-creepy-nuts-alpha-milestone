@@ -6,8 +6,9 @@ using UnityEngine;
 public class PlatformManager: MonoBehaviour {
   public static PlatformManager Instance { get; private set; }
 
-  private const float Gap = 2.5f;
   private const int Lead = 20;
+  private const int NumLanes = 3;
+  private const float LaneGap = 0f;
 
   [SerializeField]
   private Platform _platformPrefab;
@@ -27,13 +28,27 @@ public class PlatformManager: MonoBehaviour {
     platform.SetLightType((LightType) Random.Range(0, Enum.GetValues(typeof(LightType)).Length));
     platform.Index = _nextIndex;
     _nextIndex++;
-    if (_platforms.Count == 0) {
-      platform.transform.position = Vector3.zero;
-    } else {
-      platform.transform.position = _platforms[_platforms.Count - 1].transform.position
-        + (0.5f * (_platforms[_platforms.Count - 1].transform.lossyScale.z + platform.transform.lossyScale.z) + Gap) * Vector3.forward;
-    }
+    platform.transform.position = new(GetNextXPos(platform), GetNextYPos(), GetNextZPos(platform));
+    platform.transform.SetParent(transform);
+    platform.name = $"Platform{platform.Index}";
     _platforms.Add(platform);
+  }
+
+  private float GetNextXPos(Platform platform) {
+    float laneIndex = Random.Range(0, NumLanes) - (NumLanes / 2 - (NumLanes % 2 == 0 ? 0.5f : 0));
+    return laneIndex * (platform.transform.lossyScale.x + LaneGap);
+  }
+
+  private float GetNextYPos() {
+    return 0f;
+  }
+
+  private float GetNextZPos(Platform platform) {
+    if (_platforms.Count == 0) {
+      return 0f;
+    }
+
+    return _platforms[_platforms.Count - 1].transform.position.z + 0.5f * (_platforms[_platforms.Count - 1].transform.lossyScale.z + platform.transform.lossyScale.z);
   }
 
   private void Start() {

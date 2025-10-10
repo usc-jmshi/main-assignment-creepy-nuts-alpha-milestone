@@ -6,7 +6,7 @@ public class LightManager: MonoBehaviour {
 
   public LightType LightType { get; private set; }
 
-  public event Action LightSet;
+  public event Action LightTypeSet;
 
   [SerializeField]
   private Light _playerLight;
@@ -49,7 +49,7 @@ public class LightManager: MonoBehaviour {
 
     LightType = lightType;
 
-    LightSet?.Invoke();
+    LightTypeSet?.Invoke();
   }
 
   private void Awake() {

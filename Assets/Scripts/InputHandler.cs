@@ -19,10 +19,10 @@ public class InputHandler: MonoBehaviour {
     }
     PlayerController.Instance.Move(moveDir, Time.deltaTime);
 
-    // TODO: add to queue to be dequeued and processed in FixedUpdate
-    if (Keyboard.current.spaceKey.wasPressedThisFrame) {
-      PlayerController.Instance.Jump();
-    }
+    //// TODO: add to queue to be dequeued and processed in FixedUpdate
+    //if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+    //  PlayerController.Instance.Jump();
+    //}
 
     Vector2 lookDir = Mouse.current.delta.ReadValue();
     PlayerController.Instance.Look(lookDir);
@@ -33,6 +33,10 @@ public class InputHandler: MonoBehaviour {
 
     if (Mouse.current.rightButton.wasPressedThisFrame) {
       LightManager.Instance.NextLight();
+    }
+
+    if (Keyboard.current.shiftKey.wasPressedThisFrame) {
+      PlayerController.Instance.Dash();
     }
   }
 
