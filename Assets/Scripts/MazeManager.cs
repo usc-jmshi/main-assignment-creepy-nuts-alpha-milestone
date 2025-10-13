@@ -5,13 +5,22 @@ public enum Mode {
     Basic,
     Custom
 }
+
 public class MazeManager : MonoBehaviour
 {
     public Mode mode;
+    public bool enableLeveling;
+    [Tooltip("Min height defines how low below start point")]
+    public int minHeight;
+    [Tooltip("Max height defines how high above start point")]
+    public int maxHeight;
+    public float heightChance = 0f;
+
     public GameObject start;
     public float threshold = 0.3f;
     public float baseChance = 0f;
     public int subBranchDepth = 5;
+    
     public GameObject wallPrefab;
     public GameObject floorPrefab;
     public GameObject doorPrefab;
@@ -29,9 +38,11 @@ public class MazeManager : MonoBehaviour
     public Vector2Int endOffset;
 
 
+    float currentHeight;
     float tileCount;
     float totalArea;
     private int[,] maze;
+    private float[,] heightMap;
 
     void Start()
     {
@@ -52,8 +63,13 @@ public class MazeManager : MonoBehaviour
 
         // Initialize Wall Grid
         for (int y = 0; y < h * 2 + 1; y++)
+        {
             for (int x = 0; x < w * 2 + 1; x++)
+            {
                 maze[y, x] = 1;
+            }
+        }
+            
 
         // Dig tunnel
         bool[,] visited = new bool[h, w];
@@ -80,24 +96,40 @@ public class MazeManager : MonoBehaviour
     {
         int w = leftPadding + rightPadding + 1;
         int h = backwardPadding + forwardPadding + 1;
+        w = (w - 1) / 2;
+        h = (h - 1) / 2;
         tileCount = 0;
         totalArea = w * h;
         maze = new int[h * 2 + 1, w * 2 + 1];
+        if (enableLeveling)
+        {
+            currentHeight = start.transform.position.y;
+            heightMap = new float[h * 2 + 1, w * 2 + 1];
+        }
 
         // Initialize Wall Grid
         for (int y = 0; y < h * 2 + 1; y++)
+        {
             for (int x = 0; x < w * 2 + 1; x++)
+            {
                 maze[y, x] = 1;
+                if(enableLeveling)
+                    heightMap[y, x] = start.transform.position.y;
+            }
+        }
 
         // Dig tunnel
         bool[,] visited = new bool[h, w];
         List<Vector2Int> path = new List<Vector2Int>();
-        Vector2Int endIndex = new Vector2Int(leftPadding, 0) + endOffset;
-        DFSGoal(leftPadding, backwardPadding, visited, endIndex, path);
+        Vector2Int endIndex = new Vector2Int(leftPadding/2, backwardPadding /2) + (endOffset - Vector2Int.one)/2;
+        DFSGoal(leftPadding/2, backwardPadding/2, visited, endIndex, path);
 
         // Set path to destination visited and redig other branches 
         path.Reverse();
         visited = new bool[h, w];
+
+        if (enableLeveling)
+            MakeLevelingPath(path);
 
         // Count path to tiles 
         tileCount += path.Count;
@@ -241,6 +273,13 @@ public class MazeManager : MonoBehaviour
             int wallY = cy * 2 + 1 + dir.y;
             maze[wallY, wallX] = 0;
 
+            if (enableLeveling)
+            {
+                MakeLeveling();
+                heightMap[cy * 2 + 1, cx * 2 + 1] = currentHeight;
+                heightMap[wallY, wallX] = currentHeight;
+            }
+
             int nx = cx + dir.x;
             int ny = cy + dir.y;
             Redig(nx, ny, visited, dir, chance + 0.1f, depth);
@@ -251,6 +290,12 @@ public class MazeManager : MonoBehaviour
             int wallX = cx * 2 + 1 + nDir.x;
             int wallY = cy * 2 + 1 + nDir.y;
             maze[wallY, wallX] = 0;
+
+            if (enableLeveling)
+            {
+                heightMap[cy * 2 + 1, cx * 2 + 1] = currentHeight;
+                heightMap[wallY, wallX] = currentHeight;
+            }
 
             int nx = cx + nDir.x;
             int ny = cy + nDir.y;
@@ -269,14 +314,17 @@ public class MazeManager : MonoBehaviour
             Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left
         };
 
-        float chance = baseChance;
+        float chance = 0;
 
         foreach (var p in existPath)
         {
             if (Random.Range(0, 1.0f) <= chance)
             {
+                if (enableLeveling)
+                    currentHeight = heightMap[p.y * 2 + 1, p.x * 2 + 1];
+
                 Redig(p.x, p.y, visited, dirs[Random.Range(0, 4)], baseChance, 0);
-                chance = 0;
+                chance = baseChance;
             }
             else
             {
@@ -296,6 +344,73 @@ public class MazeManager : MonoBehaviour
         }
     }
 
+    void MakeLeveling()
+    {
+        if(Random.Range(0,1.0f) <= heightChance)
+        {
+            if(currentHeight >= maxHeight)
+            {
+                currentHeight -= 1;
+            }else if(currentHeight <= -minHeight)
+            {
+                currentHeight += 1;
+            }
+            else
+            {
+                // 50% percent chance level up or vice versa
+                currentHeight += Random.value < 0.5f ? -1 : 1;
+            }
+
+            heightChance = 0;
+        }
+        else
+        {
+            heightChance += 0.1f;
+        }
+    }
+
+    void MakeLevelingPath(List<Vector2Int> path)
+    {
+        if(path.Count <= 2)
+        {
+            return;
+        }
+
+        Vector2Int prevDir = path[1] - path[0];
+
+        int cx = path[0].x;
+        int cy = path[0].y;
+
+        int wallX = cx * 2 + 1 + prevDir.x;
+        int wallY = cy * 2 + 1 + prevDir.y;
+        heightMap[cy * 2 + 1, cx * 2 + 1] = currentHeight;
+        heightMap[wallY, wallX] = currentHeight;
+
+        Vector2Int nextDir;
+        for(int i = 1; i < path.Count-1; i++)
+        {
+            nextDir = path[i + 1] - path[i];
+            if(prevDir != nextDir)
+            {
+                MakeLeveling();
+            }
+
+            cx = path[i].x;
+            cy = path[i].y;
+
+            wallX = cx * 2 + 1 + nextDir.x;
+            wallY = cy * 2 + 1 + nextDir.y;
+            heightMap[cy * 2 + 1, cx * 2 + 1] = currentHeight;
+            heightMap[wallY, wallX] = currentHeight;
+
+            prevDir = nextDir;
+        }
+
+        cx = path[path.Count - 1].x;
+        cy = path[path.Count - 1].y;
+        heightMap[cy * 2 + 1, cx * 2 + 1] = currentHeight;
+    }
+
     void RenderMaze()
     {
         for (int y = 0; y < maze.GetLength(0); y++)
@@ -303,9 +418,14 @@ public class MazeManager : MonoBehaviour
             for (int x = 0; x < maze.GetLength(1); x++)
             {
                 
-                Vector3 pos = new Vector3(x, -1, y);
+                Vector3 pos = new Vector3(x, -0.5f, y);
                 if(mode == Mode.Custom) {
-                    pos += new Vector3(-2*leftPadding, 0, -2*backwardPadding);
+                    pos += new Vector3(-leftPadding, 0, -backwardPadding);
+                }
+
+                if (enableLeveling)
+                {
+                    pos += Vector3.up * heightMap[y, x];
                 }
                     
                 if (maze[y, x] == 1)
@@ -314,13 +434,18 @@ public class MazeManager : MonoBehaviour
                 }
                 else
                 {
-                    //pos += start.transform.position;
+                    pos += start.transform.position;
                     Instantiate(floorPrefab, pos, Quaternion.identity);
                 } 
             }
         }
 
-        Vector3 doorPos = new Vector3(endOffset.x, 0, endOffset.y);
+        Vector3 doorPos = new Vector3(endOffset.x, 0.5f, endOffset.y) + start.transform.position;
+        if (enableLeveling)
+        {
+            doorPos += Vector3.up * heightMap[endOffset.y, endOffset.x];
+        }
+
         Instantiate(doorPrefab, doorPos, Quaternion.identity);
     }
 }
