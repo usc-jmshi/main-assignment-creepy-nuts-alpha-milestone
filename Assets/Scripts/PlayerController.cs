@@ -11,6 +11,7 @@ public class PlayerController: MonoBehaviour {
   private const float VLookLimit = 60f;
   private const float DashDuration = 0.1f;
   private const float DashDistance = 4f;
+  public GameObject clone;
 
   [SerializeField]
   private Transform _pitchTransform;
@@ -64,7 +65,15 @@ public class PlayerController: MonoBehaviour {
   //  }
   //}
 
-  private void Awake() {
+  //// TODO: Add parameter where you check if the player has enough mana to create a copy. Rn just creates
+  public void Copy()
+  {
+    Vector3 clonePos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+    Instantiate(clone, clonePos, Quaternion.identity);
+  }
+
+  private void Awake()
+  {
     Instance = this;
 
     _rb = GetComponent<Rigidbody>();

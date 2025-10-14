@@ -2,19 +2,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputHandler: MonoBehaviour {
-  private void Update() {
+  private void Update()
+  {
     // TODO: add to queue to be dequeued and processed in FixedUpdate
     Vector3 moveDir = Vector3.zero;
-    if (Keyboard.current.wKey.isPressed) {
+    if (Keyboard.current.wKey.isPressed)
+    {
       moveDir.z++;
     }
-    if (Keyboard.current.aKey.isPressed) {
+    if (Keyboard.current.aKey.isPressed)
+    {
       moveDir.x--;
     }
-    if (Keyboard.current.sKey.isPressed) {
+    if (Keyboard.current.sKey.isPressed)
+    {
       moveDir.z--;
     }
-    if (Keyboard.current.dKey.isPressed) {
+    if (Keyboard.current.dKey.isPressed)
+    {
       moveDir.x++;
     }
     PlayerController.Instance.Move(moveDir, Time.deltaTime);
@@ -27,16 +32,24 @@ public class InputHandler: MonoBehaviour {
     Vector2 lookDir = Mouse.current.delta.ReadValue();
     PlayerController.Instance.Look(lookDir);
 
-    if (Mouse.current.leftButton.wasPressedThisFrame) {
+    if (Mouse.current.leftButton.wasPressedThisFrame)
+    {
       LightManager.Instance.PrevLight();
     }
 
-    if (Mouse.current.rightButton.wasPressedThisFrame) {
+    if (Mouse.current.rightButton.wasPressedThisFrame)
+    {
       LightManager.Instance.NextLight();
     }
 
-    if (Keyboard.current.shiftKey.wasPressedThisFrame) {
+    if (Keyboard.current.shiftKey.wasPressedThisFrame)
+    {
       PlayerController.Instance.Dash();
+    }
+
+    if (Keyboard.current.eKey.wasPressedThisFrame)
+    {
+      PlayerController.Instance.Copy();
     }
   }
 

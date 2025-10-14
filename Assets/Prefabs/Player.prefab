@@ -315,4 +315,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f707f59d97ae40ab2075125c69d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clone: {fileID: 924798767273864757, guid: 4fb8396ea7043ef46b2e14e8670e562b, type: 3}
   _pitchTransform: {fileID: 3842571888312680111}
