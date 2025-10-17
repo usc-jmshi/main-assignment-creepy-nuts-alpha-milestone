@@ -14,7 +14,7 @@ public class PlayerController: MonoBehaviour {
   private const float VLookLimit = 60f;
   private const float DashDuration = 0.1f;
   private const float DashDistance = 4f;
-    private const int MaxDashes = 3;
+    public const int MaxDashes = 3;
     private const float DashRefillDuration = 2f;
 
   [SerializeField]
@@ -83,15 +83,15 @@ public class PlayerController: MonoBehaviour {
                 yield return null;
                 _dashRefillTimer += Time.deltaTime;
             }
-            _dashesLeft++;
+            GiveDash(1);
         }
 
         _dashRefillCoroutine = null;
     }
 
-    public void GiveDash()
+    public void GiveDash(int dashes)
     {
-        _dashesLeft = Mathf.Min(MaxDashes, _dashesLeft + 1);
+        _dashesLeft = Mathf.Min(MaxDashes, _dashesLeft + dashes);
     }
 
   //public void Jump() {
