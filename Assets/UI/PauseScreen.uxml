@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/PauseScreen.uss?fileID=7433441132597879392&amp;guid=72117047cacba43209fbd2283543e840&amp;type=3#PauseScreen" />
+    <ui:VisualElement name="pause-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.54);">
+        <ui:Label text="Label" name="pause-title" />
+        <ui:Button text="Button" name="resume-button" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DashUI.uss?fileID=7433441132597879392&amp;guid=4f3c9429428b0471ead920ac06d6fb80&amp;type=3#DashUI" />
+    <ui:VisualElement name="dash-bar-container" style="flex-grow: 1; justify-content: center; align-items: auto; top: 0; bottom: auto; left: 0; right: auto; height: 55px; width: 188px;">
+        <ui:VisualElement name="dash-bar-fill" style="flex-grow: 1;" />
+    </ui:VisualElement>
+    <ui:Label text="Label" name="dash-text" style="bottom: auto; left: 20px; top: -6px; right: auto;" />
+</ui:UXML>

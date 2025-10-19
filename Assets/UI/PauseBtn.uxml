@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/PauseBtn.uss?fileID=7433441132597879392&amp;guid=3d8bcc91ec4df46ebb88cb8e9a3522ed&amp;type=3#PauseBtn" />
+    <ui:VisualElement name="pause-btn-container" style="flex-grow: 1;">
+        <ui:Button text="Button" name="pause-button" />
+    </ui:VisualElement>
+</ui:UXML>
