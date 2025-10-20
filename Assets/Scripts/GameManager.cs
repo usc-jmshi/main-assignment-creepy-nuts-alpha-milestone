@@ -18,7 +18,7 @@ public class GameManager: MonoBehaviour {
 
         _playerController.GiveDash(PlayerController.MaxDashes);
 
-        _deathWall.transform.position = 25 * Vector3.back;
+        _deathWall.Reset();
   }
 
   private void Awake() {
