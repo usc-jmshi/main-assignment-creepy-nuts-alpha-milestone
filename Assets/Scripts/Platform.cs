@@ -21,11 +21,10 @@ public class Platform: MonoBehaviour {
 
   private void Awake() {
     LightManager.Instance.LightTypeSet += OnLightSet;
-
-    if (manualLight == true)
-        {
+    
+    if (manualLight == true){
       SetLightType(LightType.Blue);
-        }
+    }
   }
 
   private void OnDestroy() {

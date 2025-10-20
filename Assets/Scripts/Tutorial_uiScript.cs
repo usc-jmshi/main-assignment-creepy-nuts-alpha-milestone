@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Serialization;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +44,11 @@ public class Tutorial_uiScript : MonoBehaviour{
             case 4:
                 {
                     text.text = "Platforms can be stood on even without the right color";
+                    break;
+                }
+            case 5:
+                {
+                    text.text = "ITS COMING BEHING RUN";
                     break;
                 }
             case -1:

@@ -19,6 +19,9 @@ public class DeathWall: MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
+    if (Moving == false){
+      return;
+    }
     if (collision.gameObject.TryGetComponent(out PlayerController playerController)) {
       GameManager.Instance.Die();
     }
