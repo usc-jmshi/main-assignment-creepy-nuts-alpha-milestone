@@ -28,11 +28,7 @@ public class InputHandler: MonoBehaviour {
     PlayerController.Instance.Look(lookDir);
 
     if (Mouse.current.leftButton.wasPressedThisFrame) {
-      LightManager.Instance.PrevLight();
-    }
-
-    if (Mouse.current.rightButton.wasPressedThisFrame) {
-      LightManager.Instance.NextLight();
+      LightManager.Instance.ToggleLight();
     }
 
     if (Keyboard.current.shiftKey.wasPressedThisFrame) {

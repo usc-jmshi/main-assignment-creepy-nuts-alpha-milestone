@@ -16,7 +16,9 @@ public class GameManager: MonoBehaviour {
     _playerController.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     _playerController.transform.position = _startTransform.position;
 
-    _deathWall.transform.position = 25 * Vector3.back;
+        _playerController.GiveDash(PlayerController.MaxDashes);
+
+        _deathWall.Reset();
   }
 
   private void Awake() {

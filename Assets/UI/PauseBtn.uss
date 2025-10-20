@@ -1,0 +1,23 @@
+#pause-btn-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+#pause-button {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-radius: 30px;
+    background-color: #00BCD4;
+    color: white;
+    border-width: 0;
+}
+
+#pause-button:hover {
+    background-color: #0097A7;
+}

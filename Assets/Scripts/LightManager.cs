@@ -11,27 +11,15 @@ public class LightManager: MonoBehaviour {
   [SerializeField]
   private Light _playerLight;
 
-  public void PrevLight() {
-    int numLightTypes = Enum.GetValues(typeof(LightType)).Length;
-    LightType prevLight = (LightType) (((int) LightType - 1 + numLightTypes) % numLightTypes);
-    SetLightType(prevLight);
-  }
-
-  public void NextLight() {
-    LightType nextLight = (LightType) (((int) LightType + 1) % Enum.GetValues(typeof(LightType)).Length);
-    SetLightType(nextLight);
-  }
+public void ToggleLight()
+    {
+        SetLightType(LightType == LightType.Red ? LightType.Blue : LightType.Red);
+    }
 
   private void SetLightType(LightType lightType) {
     switch (lightType) {
       case LightType.Red: {
           _playerLight.color = Color.red;
-
-          break;
-        }
-
-      case LightType.Green: {
-          _playerLight.color = Color.green;
 
           break;
         }
