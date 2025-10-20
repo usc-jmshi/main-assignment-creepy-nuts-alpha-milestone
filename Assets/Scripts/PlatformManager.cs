@@ -32,6 +32,10 @@ public class PlatformManager: MonoBehaviour {
     platform.transform.SetParent(transform);
     platform.name = $"Platform{platform.Index}";
     _platforms.Add(platform);
+
+    //Temporary code for collectible management
+    if(Random.value <= 0.2f)
+        CollectibleManager.Instance.CreateCollectible(0, new(GetNextXPos(platform), 0.5f, GetNextZPos(platform)));
   }
 
   private float GetNextXPos(Platform platform) {
