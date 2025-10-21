@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playButton: {fileID: 1294536971}
-  tutorialButton: {fileID: 0}
+  tutorialButton: {fileID: 1219815383}
 --- !u!4 &295387827
 Transform:
   m_ObjectHideFlags: 0

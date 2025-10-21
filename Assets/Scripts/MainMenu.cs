@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         // Hook up button listeners
         if (playButton != null)
             playButton.onClick.AddListener(OnPlayGame);
@@ -26,8 +28,6 @@ public class MainMenu : MonoBehaviour
 
     private void OnOpenTutorial()
     {
-        // Optional: load another scene by index or name
-        // SceneManager.LoadScene("TutorialScene"); 
-        // Or use SceneManager.LoadScene(2) if it's your 3rd scene in Build Settings
+        SceneManager.LoadScene(2);
     }
 }
