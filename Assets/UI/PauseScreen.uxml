@@ -3,5 +3,6 @@
     <ui:VisualElement name="pause-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.54);">
         <ui:Label text="Label" name="pause-title" />
         <ui:Button text="Button" name="resume-button" />
+        <ui:Button text="Button" name="main-menu" />
     </ui:VisualElement>
 </ui:UXML>

@@ -109,12 +109,12 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DensityMultiplier: 0.4
+    - _DensityMultiplier: 0.13540858
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _End: 10
+    - _End: 89.377426
     - _EnvironmentReflections: 1
     - _FallOffScale: 4
     - _GlossMapScale: 0
