@@ -22,7 +22,7 @@ public class PlatformTutorial : MonoBehaviour
         _mr.enabled = _lightType == LightManager.Instance.LightType;
     }
 
-    private void Awake()
+    private void Start()
     {
         LightManager.Instance.LightTypeSet += OnLightSet;
 
