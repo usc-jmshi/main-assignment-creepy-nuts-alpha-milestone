@@ -11,7 +11,7 @@ public class GameManager: MonoBehaviour {
   private Transform _startTransform;
 
   public void Die() {
-    NotificationUI.Instance.Notify("DEAD", Color.red);
+    NotificationUI.Instance.Notify("DEAD", Color.magenta);
 
     _playerController.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     _playerController.transform.position = _startTransform.position;
