@@ -56,6 +56,7 @@ public class PlayerController: MonoBehaviour {
     }
 
     _dashesLeft--;
+    DeathAnalytics.Instance?.RecordDash();
 
     _dashCoroutine = StartCoroutine(DashCoroutine());
      

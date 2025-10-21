@@ -14,6 +14,7 @@ public class LightManager: MonoBehaviour {
 public void ToggleLight()
     {
         SetLightType(LightType == LightType.Red ? LightType.Blue : LightType.Red);
+        DeathAnalytics.Instance?.RecordColorSwitch();
     }
 
   private void SetLightType(LightType lightType) {

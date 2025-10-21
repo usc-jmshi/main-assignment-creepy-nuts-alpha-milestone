@@ -25,6 +25,12 @@ public class MainMenu : MonoBehaviour
         // Load scene at index 1 (Main Game)
         SceneManager.LoadScene(1);
     }
+    
+    private void OnApplicationQuit()
+    {
+        if (DeathAnalytics.Instance != null)
+            DeathAnalytics.Instance.RecordDeath(DeathCause.Quit);
+    }
 
     private void OnOpenTutorial()
     {

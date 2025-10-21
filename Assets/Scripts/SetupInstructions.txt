@@ -1,0 +1,13 @@
+SETUP INSTRUCTIONS FOR DEATH ANALYTICS:
+
+1. Add DeathAnalytics component to GameManager GameObject in each scene
+2. Add FallDetector component to Player GameObject/Prefab
+3. Set fallThreshold in FallDetector (default: -10f)
+
+GOOGLE FORM INTEGRATION:
+- Automatically sends data to Google Form on death
+- Event Name: "Death Event"
+- Time Spent: Survival time in seconds (rounded)
+- Cause: "Caught by Chasing Object", "Block Landing Missed", "User Abandonment", "User Quit"
+
+WORKS ON WEBGL BUILDS!

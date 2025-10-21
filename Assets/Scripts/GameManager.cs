@@ -10,7 +10,14 @@ public class GameManager: MonoBehaviour {
   [SerializeField]
   private Transform _startTransform;
 
-  public void Die() {
+  public void Die(DeathCause cause = DeathCause.DeathWall) {
+    Debug.Log($"Player died: {cause}");
+    
+    if (DeathAnalytics.Instance != null)
+      DeathAnalytics.Instance.RecordDeath(cause);
+    else
+      Debug.LogError("DeathAnalytics.Instance is null! Add DeathAnalytics component to scene.");
+    
     NotificationUI.Instance.Notify("DEAD", Color.magenta);
 
     _playerController.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;

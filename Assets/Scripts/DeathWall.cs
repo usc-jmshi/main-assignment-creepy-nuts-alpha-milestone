@@ -23,7 +23,7 @@ public class DeathWall: MonoBehaviour {
       return;
     }
     if (collision.gameObject.TryGetComponent(out PlayerController playerController)) {
-      GameManager.Instance.Die();
+      GameManager.Instance.Die(DeathCause.DeathWall);
     }
   }
 }
