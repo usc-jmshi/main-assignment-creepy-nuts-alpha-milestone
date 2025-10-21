@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class NotificationUI: MonoBehaviour {
   public static NotificationUI Instance { get; private set; }
 
-  private const float NotifyDuration = 0.5f;
+  private const float NotifyDuration = 2f;
 
   private Label _label;
   private Coroutine _notifyCoroutine;
