@@ -1,3 +1,4 @@
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,6 +7,7 @@ public class PauseScreen : MonoBehaviour
     private VisualElement pauseContainer;
     private Label pauseTitle;
     private Button resumeButton;
+    private Button mainMenuButton;
     private bool isPaused = false;
 
     private void OnEnable()
@@ -15,6 +17,8 @@ public class PauseScreen : MonoBehaviour
         pauseTitle = root.Q<Label>("pause-title");
         resumeButton = root.Q<Button>("resume-button");
 
+        mainMenuButton = root.Q<Button>("main-menu");
+
         if (pauseTitle != null)
             pauseTitle.text = "Paused";
         if (resumeButton != null)
@@ -22,6 +26,12 @@ public class PauseScreen : MonoBehaviour
 
         if (resumeButton != null)
             resumeButton.clicked += Resume;
+
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.text = "Main Menu";
+            mainMenuButton.clicked += ReturnToMainMenu;
+        }
 
         if (pauseContainer != null)
             pauseContainer.style.display = DisplayStyle.None;
@@ -57,5 +67,13 @@ public class PauseScreen : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;  // re-lock mouse
         UnityEngine.Cursor.visible = false;
+    }
+
+    private void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+        SceneManager.LoadScene("MainMenu");
     }
 }
