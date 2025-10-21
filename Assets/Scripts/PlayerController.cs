@@ -30,6 +30,7 @@ public class PlayerController: MonoBehaviour {
     private int _dashesLeft = MaxDashes;
     private Coroutine _dashRefillCoroutine;
     private float _dashRefillTimer;
+    private bool _canDash = true;
 
   public void Move(Vector3 dir, float dT) {
     Matrix4x4 localToWorldDir = new(transform.right, Vector4.zero, transform.forward, Vector4.zero);
@@ -51,12 +52,12 @@ public class PlayerController: MonoBehaviour {
 
   // TODO: add cooldown or ammunition replenished by platforms?
   public void Dash() {
-    if (_dashCoroutine != null || _dashesLeft == 0) {
+    if (!_canDash || _dashCoroutine != null || _dashesLeft == 0) {
       return;
     }
 
     _dashesLeft--;
-
+        _canDash = false;
     _dashCoroutine = StartCoroutine(DashCoroutine());
      
         if (_dashRefillCoroutine != null)
@@ -111,10 +112,18 @@ public class PlayerController: MonoBehaviour {
     _currYawEulerAngles = _currYawRot.eulerAngles;
   }
 
-  //// TODO: fix falling off without jumping case 
-  //private void OnCollisionEnter(Collision collision) {
-  //  if (!_grounded) {
-  //    _grounded = Vector3.Dot(collision.GetContact(0).normal, transform.up) > 0;
-  //  }
-  //}
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!_canDash && _dashCoroutine == null)
+        {
+            _canDash = true;
+        }
+    }
+
+    //// TODO: fix falling off without jumping case 
+    //private void OnCollisionEnter(Collision collision) {
+    //  if (!_grounded) {
+    //    _grounded = Vector3.Dot(collision.GetContact(0).normal, transform.up) > 0;
+    //  }
+    //}
 }
