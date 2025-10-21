@@ -29,6 +29,6 @@ public class DashUI : MonoBehaviour
     private string GetDashIcons(int count)
     {
         // You can use ⚡, ●, or any symbol you prefer
-        return new string('⚡', Mathf.Clamp(count, 0, 3));
+        return new string('+', Mathf.Clamp(count, 0, 3));
     }
 }
