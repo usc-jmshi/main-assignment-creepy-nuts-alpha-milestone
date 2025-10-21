@@ -4,8 +4,8 @@
     background-color: #222;
     border-radius: 12px;
     position: absolute;
-    bottom: 30px;
-    left: 30px;
+    top: 50px;
+    left: 50px;
 }
 
 #dash-bar-fill {
@@ -17,8 +17,8 @@
 
 #dash-text {
     position: absolute;
-    bottom: 60px;
-    left: 30px;
+    top: 90px;
+    left: 50px;
     color: white;
     font-size: 50px;
     font-weight: bold;

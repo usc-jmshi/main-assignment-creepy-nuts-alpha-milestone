@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/legend.uss?fileID=7433441132597879392&amp;guid=f7218139b18864cfd80d2ac42842b1f8&amp;type=3#legend" />
+    <ui:VisualElement name="legend-container">
+        <ui:Label name="legend-title" text="Legend" />
+        <ui:VisualElement name="legend-box">
+            <ui:VisualElement class="legend-row">
+                <ui:Label text="Move" class="legend-action" />
+                <ui:Label text="WASD" class="legend-key" />
+            </ui:VisualElement>
+            <ui:VisualElement class="legend-row">
+                <ui:Label text="Dash" class="legend-action" />
+                <ui:Label text="Left Shift" class="legend-key" />
+            </ui:VisualElement>
+            <ui:VisualElement class="legend-row">
+                <ui:Label text="Chrono Shift" class="legend-action" />
+                <ui:Label text="Left Click" class="legend-key" />
+            </ui:VisualElement>
+            <ui:VisualElement class="legend-row">
+                <ui:Label text="Toggle Legend" class="legend-action" />
+                <ui:Label text="Tab" class="legend-key" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
